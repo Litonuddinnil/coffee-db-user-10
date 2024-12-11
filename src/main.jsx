@@ -9,6 +9,9 @@ import {
 import AddCoffee from './Components/AddCoffee.jsx';
 import UpdateCoffe from './Components/UpdateCoffe.jsx';
 import HomeLayout from './Components/HomeLayout/HomeLayout.jsx';
+import SingIn from './Components/SingIn.jsx';
+import SingUp from './Components/SingUp.jsx';
+import AuthProvider from './provider/AuthProvider.jsx';
 
 const router = createBrowserRouter([
   {
@@ -24,12 +27,23 @@ const router = createBrowserRouter([
     path:"/updateCoffee/:id",
     element:<UpdateCoffe></UpdateCoffe>,
     loader: ({params})=>fetch(`http://localhost:5000/coffee/${params.id}`)
+  },
+  {
+    path:"/singUp",
+    element:<SingUp></SingUp>
+  },
+  {
+    path:"/singIn",
+    element:<SingIn></SingIn>
   }
+  
 ]);
 
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
+    <AuthProvider>
     <RouterProvider router={router} />
+    </AuthProvider>
   </StrictMode>,
 )

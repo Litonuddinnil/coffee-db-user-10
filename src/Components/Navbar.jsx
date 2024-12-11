@@ -1,11 +1,14 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link, NavLink } from "react-router-dom";
+import { AuthContext } from "../provider/AuthProvider";
 
 const Navbar = () => {
+  const {user,logOut} = useContext(AuthContext);
     const links =
     <>
-    <li><Link to={"/"}>Home</Link></li>
-    <li><Link to={"/addCoffee"}>Add Coffee </Link></li>
+    <li><NavLink to={"/"}>Home</NavLink></li>
+    <li><NavLink to={"/addCoffee"}>Add Coffee </NavLink></li>
+     
     
     </>
   return (
@@ -43,7 +46,19 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="navbar-end">
-        <a className="btn">Button</a>
+      <div className="flex items-center justify-end gap-2 pr-6">
+        <button className="btn btn-success">
+          <Link to="/singUp">Sing Up</Link>
+        </button>
+        <span>|</span>
+        <button className={`btn ${user?.email ? "btn-warning" : "btn-error"}`}>
+          {user?.email ? (
+            <button onClick={logOut}>Log Out</button>
+          ) : (
+            <Link to="/singIn">Login</Link>
+          )}
+        </button>
+      </div>
       </div>
     </div>
   );

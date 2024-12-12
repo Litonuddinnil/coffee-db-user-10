@@ -6,7 +6,7 @@ import { AuthContext } from "../provider/AuthProvider";
 import Swal from "sweetalert2";
 
 const SingUp = () => {
-    const { createUserData, setUser, updateProfileUser } = useContext(AuthContext);
+const { createUserData, setUser, updateProfileUser } = useContext(AuthContext);
   const [terms, setTerms] = useState(false);
   const [passwordError, setPasswordError] = useState("");
   const [validName, setValidName] = useState("");
@@ -75,7 +75,7 @@ const SingUp = () => {
             
             //save new user info to the database
             const newUser = {name,email,photo,metaData};
-            fetch('http://localhost:5000/users',{
+            fetch('https://cofee-store-server-ten.vercel.app/users',{
                 method:"POST",
                 headers:{
                     'content-type':'application/json'

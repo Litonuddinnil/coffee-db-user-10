@@ -21,9 +21,25 @@ const SingIn = () => {
         logIn(email, password)
             .then((result) => {
                 setUser(result.user);
+                console.log(result.user);
                 navigate(location?.state ? location.state : "/");
                 toast.success("Login successful!");
                 e.target.reset();  
+                //update last login time
+                const lastSignInTime = result?.user?.metadata?.lastSignInTime;
+                const loginInfo = {email,lastSignInTime};
+
+                fetch(`https://cofee-store-server-ten.vercel.app/users`,{
+                    method:"PATCH",
+                    headers:{
+                        'content-type':'application/json'
+                    },
+                    body:JSON.stringify(loginInfo)
+                })  
+                .then(res =>res.json())
+                .then(data =>{
+                    console.log(data)
+                })
             })
             .catch((err) => {
                 setError("Failed to log in. Please check your credentials.");
@@ -116,7 +132,7 @@ const SingIn = () => {
               
                 <p className="text-center font-semibold text-gray-600 mt-4 mb-6">
                     Don’t have an account?{" "}
-                    <Link to="/auth/register" className="text-red-600 hover:underline">
+                    <Link to="/singUp" className="text-red-600 hover:underline">
                         Register here
                     </Link>
                 </p>
